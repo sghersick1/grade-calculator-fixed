@@ -30,10 +30,7 @@ public class Grade {
 					continue;
 				}
 				String[] part = action.split(" ");
-				if (part.length < 3) {
-					System.out.println("Invalid input. Please enter: Name Weight Score");
-					continue;
-				}
+				
 				String name = part[0];
 				float weight = Float.parseFloat(part[1]);
 				float score = Float.parseFloat(part[2]);
@@ -77,7 +74,7 @@ public class Grade {
 		for (int i=1;i<list_of_score.size(); i++) {
 			float decimal_form = weight.get(i) / 100;
 			total_weight += decimal_form;
-			float grade_value = decimal_form * list_of_score.get(i);
+			float grade_value = decimal_form + list_of_score.get(i);
 			total += grade_value;
 		}
 		System.out.println("The final grade is:" + total/total_weight);
@@ -110,4 +107,3 @@ public class Grade {
 		}
 	}
 }
-
