@@ -14,11 +14,60 @@ public class Grade {
 	ArrayList<Float> list_of_score = new ArrayList<>();;
 
 	public static void main(String[] args) {
-		Grade grade = new Grade();
-		grade.addGrade("Name", 10, 90);
-		grade.addGrade("Name", 20, 85);
-		grade.getFinalGrade();
-		grade.getLetterGrade();
+		
+		System.out.println("What do you want to do? Enter 1 for grade calculator and 2 for car recommendation");
+		Scanner scanner = new Scanner(System.in);
+		String input = scanner.nextLine();
+		while (!(input.equals("1")) && !(input.equals("2"))) {
+			System.out.println("Please enter 1 or 2");
+			input = scanner.nextLine();
+		}
+		
+		if(input.equals("1")) {
+			Grade grade = new Grade();
+			String action = "";
+			while (!(action.equals("exit"))) {
+				System.out.println("Please enter the Name, The weight of the grade, and the score. Enter exit when done.");
+				action = scanner.nextLine();
+				action.toLowerCase();
+				if (action.equals("exit")) {
+					continue;
+				}
+				String[] part = action.split(" ");
+				if (part.length < 3) {
+					System.out.println("Invalid input. Please enter: Name Weight Score");
+					continue;
+				}
+				String name = part[0];
+				System.out.println(part[2]);
+				float weight = Float.parseFloat(part[1]);
+				float score = Float.parseFloat(part[2]);
+				grade.addGrade(name, weight, score);
+				}
+			String choise = "";
+			while (!(choise.equals("exit"))) {
+				System.out.println("What would you like to see. 1 for final grade and 2 for final letter grade.");
+				choise = scanner.nextLine();
+				choise.toLowerCase();
+				if (choise.equals("exit")) {
+					continue;
+				}
+				else if (choise.equals("1")) {
+					grade.getFinalGrade();
+				}
+				else if (choise.equals("2")) {
+					grade.getLetterGrade();
+				}
+				else {
+					System.out.println("Error please enter 1, 2, or exit");
+				}
+			}
+		}
+		
+		//if (input.equals("2")) {
+			
+		//}
+		
 	}
 	
 	public void addGrade(String student, float weight, float score) {
