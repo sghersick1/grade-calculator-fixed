@@ -11,4 +11,5 @@
   For example you can enter Parm 40 90, then Parm 50 85, then Parm 10 70 and then enter "exit"
   then another option will ask for either the final score or the letter grade.
 
-## You can also press 2 to get recommendation for vehicle that meet you needs.
+### By pressing 2 
+You can also press 2 to get recommendation for vehicle that meet you needs.
