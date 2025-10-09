@@ -39,7 +39,6 @@ public class Grade {
 					continue;
 				}
 				String name = part[0];
-				System.out.println(part[2]);
 				float weight = Float.parseFloat(part[1]);
 				float score = Float.parseFloat(part[2]);
 				grade.addGrade(name, weight, score);
