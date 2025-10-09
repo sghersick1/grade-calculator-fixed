@@ -1,7 +1,3 @@
-//Letter grade cuts off 90->B
-//Skips first grade
-
-
 package Grade;
 
 import java.util.*;
@@ -114,3 +110,4 @@ public class Grade {
 		}
 	}
 }
+
