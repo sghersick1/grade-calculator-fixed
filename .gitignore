@@ -1,0 +1,6 @@
+*.class
+/bin/
+/build/
+/out/
+/target/
+hs_err_pid*
