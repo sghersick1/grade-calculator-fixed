@@ -50,8 +50,7 @@ class Scorer {
         }
 
         // --- Weights (sum ~ 1.0) ---
-        // BUG #1: Acceleration weight accidentally set far too low (should be 0.10)
-        double wPrice = 0.20, wMpg = 0.20, wYear = 0.15, wSporty = 0.10, wAccel = 0.01,
+        double wPrice = 0.20, wMpg = 0.20, wYear = 0.15, wSporty = 0.10, wAccel = 0.01, // weight accel = 0.1 weight sum = 0.76
                wFuel  = 0.10, wBody = 0.10, wTraRel = 0.05;
 
         List<Result> results = new ArrayList<>();
@@ -81,8 +80,7 @@ class Scorer {
             }
 
             // Fuel efficiency:
-            // BUG #5: Use city mpg only (skews efficiency score vs. true average)
-            double avgMpgComponent = c.getMpgCity(); // should be c.getAvgMpg()
+            double avgMpgComponent = c.getMpgCity(); // get the average of city and highway
             b.mpgN = normalize(avgMpgComponent, minMpg, maxMpg);
             if (p.getMpgTarget() != null && avgMpgComponent < (p.getMpgTarget() - 5.0)) {
                 b.mpgN *= penaltyScale((p.getMpgTarget() - 5.0) - avgMpgComponent, Math.max(1.0, p.getMpgTarget()));
@@ -92,9 +90,9 @@ class Scorer {
             b.yearN = normalize(c.getYear(), minYear, maxYear);
 
             // Sporty:
-            // BUG #3: Invert sporty preference (mismatch rewarded, match penalized)
+            // should (reward) if user wants sporty car.
             if (p.getSportyLook() == null) b.sportyN = 0.5;
-            else b.sportyN = (p.getSportyLook() == c.isSportyLook()) ? 0.0 : 1.0;
+            else b.sportyN = (p.getSportyLook() == c.isSportyLook()) ? 0.0 : 1.0;   // if it is sporty and user wants sporty, give 1.0
 
             // Acceleration: lower 0–60 is better → inverse normalization.
             b.accelN = normalizeInverse(c.getZeroToSixty(), min0060, max0060);
@@ -105,8 +103,7 @@ class Scorer {
 
             // Fuel type:
             if (p.hasFuelFilter()) {
-                // BUG #2: Case-sensitive fuel match (fails when user casing differs)
-                boolean fuelMatch = p.getFuelTypes().stream()
+                boolean fuelMatch = p.getFuelTypes().stream() // retrieve the fuel types from preferences
                         .anyMatch(f -> f.equals(c.getFuelType())); // should be equalsIgnoreCase
                 b.fuelN = fuelMatch ? 1.0 : 0.0;
             } else b.fuelN = 0.5;
@@ -120,9 +117,7 @@ class Scorer {
 
             // Traction + Reliability:
             double reliN = normalize(c.getReliabilityScore(), minReli, maxReli);
-            // BUG #6: When user SKIPS traction control, we incorrectly treat it as REQUIRED.
-            // Effect: if TC is missing, score becomes 0 regardless of reliability.            
-            if (p.getTractionControl() == null) {
+            if (p.getTractionControl() == null) { // user has no preference about TC so no effect on score
                 b.trReliN = c.hasTractionControl() ? 1.0 : 0.0; // should have used reliN
             } else if (p.getTractionControl() == Boolean.TRUE) {
                 // User requires TC: blend TC presence (70%) with reliability (30%)
@@ -167,8 +162,7 @@ class Scorer {
 
     /** Inverse min-max: smaller values map to larger scores (e.g., price, 0–60). */
     private static double normalizeInverse(double x, double min, double max) {
-        // BUG #4: Flat range returns 0.0 (penalizes everything) instead of neutral/best
-        if (max - min == 0) return 0.0; // should be 1.0
+        if (max - min == 0) return 0.0; // return 1.0
         return 1.0 - ((x - min) / (max - min));
     }
 
