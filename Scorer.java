@@ -120,12 +120,15 @@ class Scorer {
 
             // Traction + Reliability:
             double reliN = normalize(c.getReliabilityScore(), minReli, maxReli);
-            // BUG #6: Treat skip as if traction is required (ignores reliability-only behavior)
+            // BUG #6: When user SKIPS traction control, we incorrectly treat it as REQUIRED.
+            // Effect: if TC is missing, score becomes 0 regardless of reliability.            
             if (p.getTractionControl() == null) {
                 b.trReliN = c.hasTractionControl() ? 1.0 : 0.0; // should have used reliN
             } else if (p.getTractionControl() == Boolean.TRUE) {
+                // User requires TC: blend TC presence (70%) with reliability (30%)
                 b.trReliN = (c.hasTractionControl() ? 1.0 : 0.0) * 0.7 + reliN * 0.3;
             } else {
+                // User explicitly does NOT require TC: rely on reliability only
                 b.trReliN = reliN;
             }
 
