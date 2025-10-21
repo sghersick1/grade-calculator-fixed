@@ -1,7 +1,0 @@
-Scorer:
-- wAccel weight set too low, 0.01 instead of 0.1 (line 54)
-- [KINDA BUG] Case-sensitive fuel match (line 97)
-- Sporty is calculated backwards (line 97)
-- normalizeInverse returning regular scores not inverse (line 168)
-- fuel efficiency using cityMPG instead of avgMPG (line 85)
-- trReliN should use reliN not instead of traction control boolean (line 125)
