@@ -31,8 +31,7 @@ class GradeCalculatorTest {
 	}
 	
 	/**
-	 * quit from the main method
-	 * @author Sam Hersick
+	 * Test quit input from the main method
 	 */
 	@Test
 	void quitMainMethod() {
@@ -55,6 +54,67 @@ class GradeCalculatorTest {
 		
 		String[] lines = baos.toString().split(System.lineSeparator());
 		String actual = lines[lines.length - 1];
+		
+		Assertions.assertEquals(expected, actual);
+	}
+	
+	/**
+	 * Test "select grade calculator" input option from the main method
+	 */
+	@Test
+	void enterGradeCalculator() {
+		
+		// Input
+		String userInput = String.format("1%sdone%s1%s", 
+				System.lineSeparator(), 
+				System.lineSeparator(),
+				System.lineSeparator());
+	    ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
+	    System.setIn(bais);
+		
+		// Expected 
+		String expected = "Please enter the Name, The weight of the grade, and the score. Enter done when finished.";
+		
+		// Output
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream pStream = new PrintStream(baos);
+		System.setOut(pStream);
+		
+		// Run Application
+		Main.main(null);
+		
+		String[] lines = baos.toString().split(System.lineSeparator());
+		String actual = lines[1];
+		
+		Assertions.assertEquals(expected, actual);
+	}
+	
+	/**
+	 * Test invalid entry into main method
+	 */
+	@Test
+	void invalidMainMethodEntry() {
+		
+		// Input
+		String userInput = String.format("5%sq%s", 
+				System.lineSeparator(), 
+				System.lineSeparator());
+	    ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
+	    System.setIn(bais);
+		
+		// Expected 
+		String expected = "Please enter 1 or 2 (or q to quit)";
+		
+		// Output
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream pStream = new PrintStream(baos);
+		System.setOut(pStream);
+		
+		// Run Application
+		Main.main(null);
+		
+		String[] lines = baos.toString().split(System.lineSeparator());
+		String actual = lines[1];
 		
 		Assertions.assertEquals(expected, actual);
 	}
