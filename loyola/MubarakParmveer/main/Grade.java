@@ -1,4 +1,6 @@
-import java.util.*;
+package loyola.MubarakParmveer.main;
+
+import java.util.ArrayList;
 
 public class Grade {
 

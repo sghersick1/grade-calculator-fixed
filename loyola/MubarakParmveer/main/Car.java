@@ -1,3 +1,5 @@
+package loyola.MubarakParmveer.main;
+
 public class Car {
     private final String brand;
     private final String model;

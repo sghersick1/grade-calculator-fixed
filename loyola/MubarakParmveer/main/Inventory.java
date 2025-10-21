@@ -1,4 +1,7 @@
-import java.util.*;
+package loyola.MubarakParmveer.main;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Inventory {
     public static List<Car> build() {

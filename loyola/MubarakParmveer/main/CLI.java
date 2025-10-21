@@ -1,4 +1,6 @@
-import java.util.*; 
+package loyola.MubarakParmveer.main;
+
+import java.util.Scanner; 
 
 public class CLI {
     // Collect all user preferences via CLI, allowing "empty" for any prompt.

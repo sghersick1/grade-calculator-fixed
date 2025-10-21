@@ -1,4 +1,8 @@
-import java.util.*; // HashSet, Set, etc.
+package loyola.MubarakParmveer.main;
+
+// HashSet, Set, etc.
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * User preferences for car search, as specified via CLI arguments.
