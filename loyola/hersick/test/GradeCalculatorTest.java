@@ -219,7 +219,7 @@ class GradeCalculatorTest {
 	 * Test right below letter grade threshold, shouldn't round up
 	 */
 	@Test
-	void nullValueTest() {
+	void roundingUncertaintyTest() {
 		grade = new Grade();
 		grade.addGrade("exam", 100, 89.65f);
 		String actual = grade.getLetterGrade();
